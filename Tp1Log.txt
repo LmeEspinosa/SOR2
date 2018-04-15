@@ -1,0 +1,76 @@
+|----------------------------------------------------------
+|  Partition entry 1: First byte 0x80
+|  Booteable
+|  Partition start in CHS: 00:02:00
+|  Partition type 0x01
+|  Partition end in CHS: 00:20:20
+|  Relative LBA address 0x00000001, 2047 sectors long
+|----------------------------------------------------------
+
+|----------------------------------------------------------
+|  Partition entry 2: First byte 0x00
+|  No Booteable
+|  Partition start in CHS: 00:00:00
+|  Partition type 0x00
+|  Partition end in CHS: 00:00:00
+|  Relative LBA address 0x00000000, 0 sectors long
+|----------------------------------------------------------
+
+|----------------------------------------------------------
+|  Partition entry 3: First byte 0x00
+|  No Booteable
+|  Partition start in CHS: 00:00:00
+|  Partition type 0x00
+|  Partition end in CHS: 00:00:00
+|  Relative LBA address 0x00000000, 0 sectors long
+|----------------------------------------------------------
+
+|----------------------------------------------------------
+|  Partition entry 4: First byte 0x00
+|  No Booteable
+|  Partition start in CHS: 00:00:00
+|  Partition type 0x00
+|  Partition end in CHS: 00:00:00
+|  Relative LBA address 0x00000000, 0 sectors long
+|----------------------------------------------------------
+
+Partition type: 1
+Encontrado FAT12 0
+  Jump code: EB:3C:90
+  OEM code: [mkfs.fat]
+  sector_size: 512
+  sector_per_cluster 4
+  reserved_sector 1
+  number_of_fats 2
+  root_dir_entries: 512
+  total_sectors_short: 2048
+  media_descriptor: 0xF8
+  fat_size_sectors: 2
+  sectors_per_track: 32
+  number_of_heads: 64
+  hidden_sectors: 0
+  total_sectors_long: 0
+  drive_number: 0x80
+  current_head: 0x01
+  Extended_boot_signature: 0x29
+  volume_id: 0x113771871
+  Volume label: [NO NAME    ]
+  Filesystem type: [FAT12   ]
+  boot code 0x140731322899918
+  Boot sector signature: 0xAA55
+Encontrada particion FAT12 0
+En  0x200, sector size 512, FAT size 2 sectors, 2 FATs
+
+Root dir_entries 512 
+    Attribute Byte: [0x41]    File: [Am.]
+    Attribute Byte: [0x4D]    File: [MI_DIR  .   ]
+    Attribute Byte: [0x41]    File: [Ah.]
+    Attribute Byte: [0x48]    File: [HOLA    .TXT]
+    Attribute Byte: [0xE5]    Deleted fileattributeByte: [?Â..]
+    Attribute Byte: [0xE5]    Deleted fileattributeByte: [?Â..]
+    Attribute Byte: [0xE5]    Deleted fileattributeByte: [?ÂORRAR~.SWP]
+    Attribute Byte: [0xE5]    Deleted fileattributeByte: [?Â..]
+    Attribute Byte: [0xE5]    Deleted fileattributeByte: [?Â..]
+    Attribute Byte: [0xE5]    Deleted fileattributeByte: [?ÂORRAR~.SWX]
+
+Leido Root directory, ahora en 0x4A00
