@@ -46,17 +46,16 @@ typedef struct {
     unsigned short modify_time;
     unsigned short modify_date;
     unsigned short starting_cluster;
-    unsigned int  file_size;
+    unsigned int   file_size;
 } __attribute((packed)) Fat12Entry;
 
 void print_file_info(Fat12Entry *entry) {
-    entry->attributes=entry->filename[0];
-    switch(entry->attributes) {
+    switch(entry->filename[0]) {
     case 0x00:
         return;
     case 0xE5:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
-        printf("    Deleted fileattributeByte: [?%.7s.%.3s]\n",entry->filename,entry->ext);
+        printf("     Deleted file: [?%.7s.%.3s]\n",entry->filename,entry->ext);
         return;
     case 0x05:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
@@ -65,11 +64,34 @@ void print_file_info(Fat12Entry *entry) {
     case 0x2E:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    Directory: [%.8s.%.3s]\n",entry->filename,entry->ext);
-        break;
+        return;
     default:
+        switch(entry->attributes){
+        case 0x01:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
-//        printf("    Data: [%.10s]",entry->reserved); 
+        printf("    Read Only File: [%.8s.%.3s]\n",entry->filename,entry->ext);
+        break;
+        case 0x02:
+        printf("    Attribute Byte: [0x%X]",entry->attributes);
+        printf("    Hidden File: [%.8s.%.3s]\n",entry->filename,entry->ext);
+        break;
+        case 0x04:
+        printf("    Attribute Byte: [0x%X]",entry->attributes);
+        printf("    System File: [%.8s.%.3s]\n",entry->filename,entry->ext);
+        break;
+        case 0x08:
+        printf("    Attribute Byte: [0x%X]",entry->attributes);
+        printf("    Volume ID File: [%.8s.%.3s]\n",entry->filename,entry->ext);
+        break;
+        case 0x10:
+        printf("    Attribute Byte: [0x%X]",entry->attributes);
+        printf("    Directory : [%.8s.%.3s]\n",entry->filename,entry->ext);
+        break;
+        case 0x20:
+        printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    File: [%.8s.%.3s]\n",entry->filename,entry->ext);
+        break;
+        }
     }
     
 }
