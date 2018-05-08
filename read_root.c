@@ -60,7 +60,7 @@ void print_file_info(Fat12Entry *entry) {
     case 0x05:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    File starting with 0xE5: [%c%.7s.%3s]\n", 0xE5,entry->filename,entry->ext);
-        break;
+        return;
     case 0x2E:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    Directory: [%.8s.%.3s]\n",entry->filename,entry->ext);
@@ -70,27 +70,27 @@ void print_file_info(Fat12Entry *entry) {
         case 0x01:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    Read Only File: [%.8s.%.3s]\n",entry->filename,entry->ext);
-        break;
+        return;
         case 0x02:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    Hidden File: [%.8s.%.3s]\n",entry->filename,entry->ext);
-        break;
+        return;
         case 0x04:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    System File: [%.8s.%.3s]\n",entry->filename,entry->ext);
-        break;
+        return;
         case 0x08:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    Volume ID File: [%.8s.%.3s]\n",entry->filename,entry->ext);
-        break;
+        return;
         case 0x10:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    Directory : [%.8s.%.3s]\n",entry->filename,entry->ext);
-        break;
+        return;
         case 0x20:
         printf("    Attribute Byte: [0x%X]",entry->attributes);
         printf("    File: [%.8s.%.3s]\n",entry->filename,entry->ext);
-        break;
+        return;
         }
     }
     
@@ -120,19 +120,25 @@ int main() {
     
     fseek(in, 0, SEEK_SET);
     fread(&bs, sizeof(Fat12BootSector), 1, in); //{...} Leo boot sector
-    
-    printf("En  0x%lX, sector size %d, FAT size %d sectors, %d FATs\n\n", 
-           ftell(in), bs.sector_size, bs.fat_size_sectors, bs.number_of_fats);
-           
-    fseek(in, (bs.reserved_sectors-1 + bs.fat_size_sectors * bs.number_of_fats) *
-          bs.sector_size, SEEK_CUR);
-    
-    printf("Root dir_entries %d \n", bs.root_dir_entries);
-    for(i=0; i<bs.root_dir_entries; i++) {
-        fread(&entry, sizeof(entry), 1, in);
-        print_file_info(&entry);
+    int bandera=0;
+    while(ftell(in) < 0xffff)
+    {
+           if (bandera==0){
+	      printf("En  0x%lX, sector size %d, FAT size %d sectors, %d FATs\n\n", 
+		   ftell(in), bs.sector_size, bs.fat_size_sectors, bs.number_of_fats);
+              }
+		   
+	    fseek(in, (bs.reserved_sectors-1 + bs.fat_size_sectors * bs.number_of_fats) *
+		  bs.sector_size, SEEK_CUR);
+	    if (bandera==0){
+	       printf("Root dir_entries %d \n", bs.root_dir_entries);
+            }
+	    for(i=0; i<bs.root_dir_entries; i++) {
+		fread(&entry, sizeof(entry), 1, in);
+		print_file_info(&entry);
+	    }	   
+            bandera=-1;
     }
-    
     printf("\nLeido Root directory, ahora en 0x%lX\n", ftell(in));
     fclose(in);
     return 0;
